@@ -83,7 +83,7 @@ if (!isset($_GET["Cleanup"])) {
         fclose($myfile);
         
         # Upload file as a block blob
-        echo "Uploading BlockBlob: ".PHP_EOL;
+        echo "Mengunggah BlockBlob: ".PHP_EOL;
         echo $fileToUpload;
         echo "<br />";
         
@@ -94,15 +94,17 @@ if (!isset($_GET["Cleanup"])) {
 
         // List blobs.
         $listBlobsOptions = new ListBlobsOptions();
-        $listBlobsOptions->setPrefix("HelloWorld");
 
-        echo "These are the blobs present in the container: ";
+        echo "Upload berhasil <br>";
+
+        echo "Nama File: ";
 
         do{
             $result = $blobClient->listBlobs($containerName, $listBlobsOptions);
             foreach ($result->getBlobs() as $blob)
             {
-                echo $blob->getName().": ".$blob->getUrl()."<br />";
+                echo $blob->getName()."<br>";
+                echo "URL: ".$blob->getUrl()."<br />";
             }
         
             $listBlobsOptions->setContinuationToken($result->getContinuationToken());
@@ -110,10 +112,8 @@ if (!isset($_GET["Cleanup"])) {
         echo "<br />";
 
         // Get blob.
-        echo "This is the content of the blob uploaded: ";
         $blob = $blobClient->getBlob($containerName, $fileToUpload);
         fpassthru($blob->getContentStream());
-        echo "<br />";
     }
     catch(ServiceException $e){
         // Handle exception based on error codes and messages.
@@ -154,6 +154,4 @@ else
 ?>
 
 
-<form method="post" action="phpQS.php?Cleanup&containerName=<?php echo $containerName; ?>">
-    <button type="submit">Press to clean up all resources created by this sample</button>
-</form>
+

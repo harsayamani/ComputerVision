@@ -23,69 +23,6 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 </head>
 <body>
- 
-<script type="text/javascript">
-    function processImage() {
-        // **********************************************
-        // *** Update or verify the following values. ***
-        // **********************************************
- 
-        // Replace <Subscription Key> with your valid subscription key.
-        var subscriptionKey = "e46d1db0eeb2445485231a9644263a94";
- 
-        // You must use the same Azure region in your REST API method as you used to
-        // get your subscription keys. For example, if you got your subscription keys
-        // from the West US region, replace "westcentralus" in the URL
-        // below with "westus".
-        //
-        // Free trial subscription keys are generated in the "westus" region.
-        // If you use a free trial subscription key, you shouldn't need to change
-        // this region.
-        var uriBase = "https://southeastasia.api.cognitive.microsoft.com/vision/v2.0/analyze";
- 
-        // Request parameters.
-        var params = {
-            "visualFeatures": "Categories,Description,Color",
-            "details": "",
-            "language": "en",
-        };
- 
-        // Display the image.
-        var sourceImageUrl = document.getElementById("inputImage").value;
-        document.querySelector("#sourceImage").src = sourceImageUrl;
- 
-        // Make the REST API call.
-        $.ajax({
-            url: uriBase + "?" + $.param(params),
- 
-            // Request headers.
-            beforeSend: function(xhrObj){
-                xhrObj.setRequestHeader("Content-Type","application/json");
-                xhrObj.setRequestHeader(
-                    "Ocp-Apim-Subscription-Key", subscriptionKey);
-            },
- 
-            type: "POST",
- 
-            // Request body.
-            data: '{"url": ' + '"' + sourceImageUrl + '"}',
-        })
- 
-        .done(function(data) {
-            // Show formatted JSON on webpage.
-            $("#responseTextArea").val(JSON.stringify(data, null, 2));
-        })
- 
-        .fail(function(jqXHR, textStatus, errorThrown) {
-            // Display error message.
-            var errorString = (errorThrown === "") ? "Error. " :
-                errorThrown + " (" + jqXHR.status + "): ";
-            errorString += (jqXHR.responseText === "") ? "" :
-                jQuery.parseJSON(jqXHR.responseText).message;
-            alert(errorString);
-        });
-    };
-</script>
 
 <!-- Left Panel -->
 
@@ -96,10 +33,10 @@
                 <ul class="nav navbar-nav">
                     
                     <li class="menu-title">Dashboard</li><!-- /.menu-title -->
-                    <li class="active">
+                    <li>
                         <a href="index.php"><i class="menu-icon fa fa-laptop"></i>Analisa Gambar</a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="uploadFile.php"><i class="menu-icon fa fa-laptop"></i>Upload File</a>
                     </li>
                 </ul>
@@ -146,7 +83,7 @@
                             <div class="page-title">
                                 <ol class="breadcrumb text-right">
                                     <li><a href="#">Dashboard</a></li>
-                                    <li class="active">Analisa Gambar</li>
+                                    <li class="active">Upload Gambar</li>
                                 </ol>
                             </div>
                         </div>
@@ -161,46 +98,29 @@
                     <div class="col-sm-6">
                         <div class="card">
                             <div class="card-header">
-                                <strong>Form Analisa Gambar</strong>
+                                <strong>Form Upload Gambar</strong>
                             </div>
                             <div class="card-body card-block">
                                 <div class="form-group">
+                                        <label for="file-input" class=" form-control-label">Masukkan Gambar</label>
+                                </div>
+                                <form action="phpQS.php" method="POST">
+                                <div class="form-group">
                                     <div class="input-group">
-                                        <input type="text" name="inputImage" id="inputImage"
-                                        value="https://harsoftwebstorage.blob.core.windows.net/polindra/IMG-20170817-WA0004 copy.png" />
+                                        <input type="file" accept="image/*" id="gambar" name="gambar" class="form-control-file">
                                     </div>
-                                    <small class="form-text text-muted">* URL Gambar</small>  
                                 </div>
                                 <div class="form-group">
-                                    <button class="btn btn-primary" onclick="processImage()">Analisa Sekarang</button> 
+                                    <button class="btn btn-primary" type="submit">Unggah</button> 
                                 </div>
-                                <div id="imageDiv" style="width:420px; display:table-cell;">
-                                    Source image :
-                                    <br><br>
-                                    <img id="sourceImage" width="400" />
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
-                    <div class=" col-sm-6">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <strong class="card-title">Response</strong>
-                                    </div>
-                                <div class="card-body">
-                                    <div class="col-sm-4">
-                                        <div id="jsonOutput" style="width:600px; display:table-cell;">
-                                            <textarea id="responseTextArea"  style="width:390px; height:400px;">
-                                            </textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                </div>
             </div><!-- .animated -->
         </div><!-- .content -->
-    <div class="clearfix"></div>
+        <div class="clearfix"></div>
 
     <footer class="site-footer">
         <div class="footer-inner bg-white">
