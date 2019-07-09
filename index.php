@@ -162,10 +162,22 @@
                             </div>
                             <div class="card-body card-block">
                                 <div class="form-group">
-                                    <label class=" form-control-label">Masukkan Url Gambar:</label>
+                                        <label for="file-input" class=" form-control-label">Masukkan Gambar</label>
+                                </div>
+                                <form action="phpQS.php" method="POST">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="file" accept="image/*" id="gambar" name="gambar" class="form-control-file">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary" type="submit">Unggah</button> 
+                                </div>
+                                </form>
+                                <div class="form-group">
                                     <div class="input-group">
                                         <input type="text" name="inputImage" id="inputImage"
-                                        value="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Bill_Foster%2C_Official_Portrait%2C_113th_Congress.jpg/220px-Bill_Foster%2C_Official_Portrait%2C_113th_Congress.jpg" />
+                                        value=""  />
                                     </div>
                                     <small class="form-text text-muted">* URL Gambar</small>  
                                 </div>
